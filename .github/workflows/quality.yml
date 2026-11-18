@@ -1,0 +1,33 @@
+name: Portfolio quality
+on:
+  push:
+    branches: [main, portfolio-refinement]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  browser-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - name: Responsive, functional and accessibility checks
+        run: npm test
+      - name: Mobile Lighthouse measurement
+        if: always()
+        run: |
+          python3 -m http.server 8080 > /tmp/portfolio-server.log 2>&1 &
+          npx lighthouse http://localhost:8080 --chrome-flags="--headless --no-sandbox" --output=json --output=html --output-path=qa-results/lighthouse --quiet
+          node -e "const r=require('./qa-results/lighthouse.report.json'); console.log(JSON.stringify({scores:Object.fromEntries(Object.entries(r.categories).map(([k,v])=>[k,v.score*100])),metrics:Object.fromEntries(['largest-contentful-paint','cumulative-layout-shift','total-blocking-time'].map(k=>[k,r.audits[k].displayValue]))},null,2))"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: portfolio-qa
+          path: qa-results/
+          retention-days: 14
