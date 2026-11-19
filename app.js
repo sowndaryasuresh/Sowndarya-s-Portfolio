@@ -16,6 +16,7 @@
   let menuOpen = false;
   function setMenu(open, restoreFocus = true) {
     menuOpen = open;
+    menu.hidden = !open;
     menu.inert = !open;
     background.forEach((node) => { node.inert = open; });
     menu.classList.toggle('open', open);
@@ -88,13 +89,16 @@
   let phaseTimer = 0, frame = 0;
   function stopSequence() {
     clearTimeout(phaseTimer); cancelAnimationFrame(frame);
+    workflow.getAnimations({ subtree: true }).forEach((animation) => animation.cancel());
     workflow.classList.remove('running'); phase.textContent = phases[3];
   }
   function startSequence() {
     stopSequence();
     if (reduced.matches || document.hidden) return;
     frame = requestAnimationFrame(() => {
-      workflow.classList.add('running'); phase.textContent = phases[0];
+      workflow.classList.add('running');
+      workflow.getAnimations({ subtree: true }).forEach((animation) => { animation.currentTime = 0; animation.play(); });
+      phase.textContent = phases[0];
       let index = 0;
       const next = () => {
         phase.textContent = phases[++index];

@@ -17,6 +17,8 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Match disposable runner home ownership
+        run: chown "$(id -u):$(id -g)" "$HOME"
       - name: Responsive, functional and accessibility checks
         run: npm test
       - name: Mobile Lighthouse measurement

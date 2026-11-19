@@ -16,7 +16,7 @@ let base;
 (async()=>{
  await new Promise(resolve=>server.listen(8081,'127.0.0.1',resolve));base=`http://127.0.0.1:8081${prefix}`;
  for(const [engine,type] of Object.entries({chromium,firefox,webkit})){
-  const browser=await type.launch();const context=await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true});const page=await context.newPage();
+  let browser;try { browser=await type.launch(); } catch(e) { results.errors.push(engine+': '+e.message);continue; }const context=await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true});const page=await context.newPage();
   page.on('pageerror',e=>results.errors.push(engine+': '+e.message));
   const failures=[];page.on('response',r=>{if(r.status()>=400)failures.push(r.status()+' '+r.url())});
   try{
@@ -31,7 +31,7 @@ let base;
    assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'),'true');
    assert(await page.locator('#main').evaluate(el=>el.inert));
    await page.keyboard.press('Escape');assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'),'false');assert(await page.locator('.menu-toggle').evaluate(el=>el===document.activeElement));
-   await page.locator('.menu-toggle').click();await page.locator('#mobile-menu a').last().focus();await page.keyboard.press('Tab');assert(await page.locator('.menu-toggle').evaluate(el=>el===document.activeElement));await page.keyboard.press('Shift+Tab');assert(await page.locator('#mobile-menu a').last().evaluate(el=>el===document.activeElement));
+   await page.locator('.menu-toggle').click();assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'),'true');await page.locator('#mobile-menu a').last().focus();assert(await page.locator('#mobile-menu a').last().evaluate(el=>el===document.activeElement));await page.keyboard.press('Tab');assert(await page.locator('.menu-toggle').evaluate(el=>el===document.activeElement));await page.keyboard.press('Shift+Tab');assert(await page.locator('#mobile-menu a').last().evaluate(el=>el===document.activeElement));
    await page.locator('#mobile-menu').getByRole('link',{name:'Experience',exact:true}).click();await page.waitForTimeout(750);assert.equal(new URL(page.url()).hash,'#experience');assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'),'false');assert.equal(await page.locator('body').evaluate(el=>el.style.overflow),'');
    await page.goBack();assert.equal(new URL(page.url()).hash,'');await page.goForward();assert.equal(new URL(page.url()).hash,'#experience');
    for(const category of ['CRM','Data','Quality','Documentation','Business','All']){
