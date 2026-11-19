@@ -12,6 +12,8 @@ Lightweight HTML, CSS and JavaScript. No client framework or production dependen
 - `docs/role-tailoring.md`: four headline / summary variants and evidence questions.
 - `docs/ats-research.md`: hiring-language sources and factual limits.
 
+[Audit, wording changes and verified QA results](docs/audit-and-qa.md)
+
 ## Validation
 
 Run `npm ci`, `npx playwright install --with-deps chromium firefox webkit`, then `npm test`. Development dependencies are only used for tests. GitHub Actions also generates mobile Lighthouse reports and screenshots. Automated accessibility testing is not a claim of full WCAG conformance. Field INP is not inferred from laboratory measurements.

@@ -1,0 +1,185 @@
+{
+  "viewports": [
+    {
+      "engine": "chromium",
+      "width": 320,
+      "scroll": 320,
+      "items": []
+    },
+    {
+      "engine": "chromium",
+      "width": 360,
+      "scroll": 360,
+      "items": []
+    },
+    {
+      "engine": "chromium",
+      "width": 375,
+      "scroll": 375,
+      "items": []
+    },
+    {
+      "engine": "chromium",
+      "width": 390,
+      "scroll": 390,
+      "items": []
+    },
+    {
+      "engine": "chromium",
+      "width": 430,
+      "scroll": 430,
+      "items": []
+    },
+    {
+      "engine": "chromium",
+      "width": 550,
+      "scroll": 550,
+      "items": []
+    },
+    {
+      "engine": "chromium",
+      "width": 768,
+      "scroll": 768,
+      "items": []
+    },
+    {
+      "engine": "chromium",
+      "width": 1024,
+      "scroll": 1024,
+      "items": []
+    },
+    {
+      "engine": "chromium",
+      "width": 1280,
+      "scroll": 1280,
+      "items": []
+    },
+    {
+      "engine": "chromium",
+      "width": 1440,
+      "scroll": 1440,
+      "items": []
+    },
+    {
+      "engine": "chromium",
+      "width": 1920,
+      "scroll": 1920,
+      "items": []
+    },
+    {
+      "engine": "firefox",
+      "width": 320,
+      "scroll": 320,
+      "items": []
+    },
+    {
+      "engine": "firefox",
+      "width": 768,
+      "scroll": 768,
+      "items": []
+    },
+    {
+      "engine": "firefox",
+      "width": 1440,
+      "scroll": 1440,
+      "items": []
+    },
+    {
+      "engine": "webkit",
+      "width": 320,
+      "scroll": 320,
+      "items": []
+    },
+    {
+      "engine": "webkit",
+      "width": 768,
+      "scroll": 768,
+      "items": []
+    },
+    {
+      "engine": "webkit",
+      "width": 1440,
+      "scroll": 1440,
+      "items": []
+    }
+  ],
+  "functional": [
+    {
+      "engine": "chromium",
+      "status": "passed",
+      "checks": [
+        "menu open/close/Escape/focus loop",
+        "anchor history",
+        "all filters",
+        "all disclosures keyboard/mouse",
+        "rapid replay",
+        "clipboard/fallback",
+        "PDF download",
+        "local assets",
+        "anchor targets",
+        "mailto/LinkedIn targets",
+        "back to top",
+        "landscape",
+        "long content",
+        "reduced motion",
+        "no JavaScript",
+        "touch cursor"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "status": "passed",
+      "checks": [
+        "menu open/close/Escape/focus loop",
+        "anchor history",
+        "all filters",
+        "all disclosures keyboard/mouse",
+        "rapid replay",
+        "clipboard/fallback",
+        "PDF download",
+        "local assets",
+        "anchor targets",
+        "mailto/LinkedIn targets",
+        "back to top",
+        "landscape",
+        "long content",
+        "reduced motion",
+        "no JavaScript",
+        "touch cursor"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "status": "passed",
+      "checks": [
+        "menu open/close/Escape/focus loop",
+        "anchor history",
+        "all filters",
+        "all disclosures keyboard/mouse",
+        "rapid replay",
+        "clipboard/fallback",
+        "PDF download",
+        "local assets",
+        "anchor targets",
+        "mailto/LinkedIn targets",
+        "back to top",
+        "landscape",
+        "long content",
+        "reduced motion",
+        "no JavaScript",
+        "touch cursor"
+      ]
+    }
+  ],
+  "accessibility": [
+    {
+      "width": 390,
+      "violations": []
+    },
+    {
+      "width": 1440,
+      "violations": []
+    }
+  ],
+  "errors": []
+}
