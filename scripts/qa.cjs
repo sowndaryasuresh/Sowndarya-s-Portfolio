@@ -41,14 +41,14 @@ let base;
    }
    for(const summary of await page.locator('summary').all()){await summary.click();assert(await summary.evaluate(el=>el.parentElement.open));await summary.press('Enter');assert(!(await summary.evaluate(el=>el.parentElement.open)));}
    await page.locator('.replay').scrollIntoViewIfNeeded();for(let i=0;i<4;i++)await page.locator('.replay').click();await page.waitForTimeout(3100);assert.equal((await page.locator('.phase').innerText()).trim(),'04 / CLARITY');
-   await page.locator('.copy-email').click();assert.match(await page.locator('.copy-status').innerText(),/Email address copied|Copy this address/);
+   if(engine==='chromium')await context.grantPermissions(['clipboard-read','clipboard-write']);await page.locator('.copy-email').click();await page.waitForFunction(()=>/Email address copied|Copy this address/.test(document.querySelector('.copy-status').textContent));assert.match(await page.locator('.copy-status').innerText(),/Email address copied|Copy this address/);
    const [download]=await Promise.all([page.waitForEvent('download'),page.locator('.resume-link').click()]);assert.equal(download.suggestedFilename(),'Sowndarya-Sureshkumar-Resume.pdf');assert.equal(await download.failure(),null);
    const assetLinks=await page.locator('a[href],img[src],link[rel="stylesheet"],script[src]').evaluateAll(es=>es.map(e=>e.getAttribute('href')||e.getAttribute('src')).filter(x=>x&&!x.startsWith('#')&&!x.startsWith('data:')&&!x.includes(':')));
    for(const link of new Set(assetLinks)){const res=await context.request.get(new URL(link,base).href);assert.equal(res.status(),200,link);}
    const anchors=await page.locator('a[href^="#"]').evaluateAll(es=>es.map(e=>e.hash));for(const hash of anchors)assert(await page.locator(hash).count(),hash);
    assert((await page.locator('a[href^="mailto:"]').first().getAttribute('href'))==='mailto:sowndaryas397@gmail.com');
    assert.equal(await page.locator('a[href="https://www.linkedin.com/in/sowndarya-suresh-kumar/"]').count(),2);
-   await page.locator('footer a[href="#home"]').click();await page.waitForTimeout(800);assert((await page.evaluate(()=>scrollY))<100);
+   await page.getByRole('link',{name:'Back to top',exact:true}).click();await page.waitForTimeout(800);assert((await page.evaluate(()=>scrollY))<100);
    for(const [width,height] of [[844,390],[667,375]]){await page.setViewportSize({width,height});await overflow(page,engine+' landscape');if(width<801){await page.locator('.menu-toggle').click();assert(await page.locator('#mobile-menu a').last().isVisible());await page.keyboard.press('Escape');}}
    await page.setViewportSize({width:320,height:900});await page.locator('.hero-tagline').evaluate(el=>el.textContent+=' Additional supporting information about business requirements and stakeholder communication.'.repeat(8));await overflow(page,engine+' long content');
    await visit(page);await page.emulateMedia({reducedMotion:'reduce'});await page.locator('.replay').click();assert.equal((await page.locator('.phase').innerText()).trim(),'04 / CLARITY');assert.equal(await page.locator('.cursor').evaluate(el=>getComputedStyle(el).display),'none');assert.equal(await page.locator('html').evaluate(el=>getComputedStyle(el).scrollBehavior),'auto');
