@@ -48,7 +48,7 @@ let base;
    const anchors=await page.locator('a[href^="#"]').evaluateAll(es=>es.map(e=>e.hash));for(const hash of anchors)assert(await page.locator(hash).count(),hash);
    assert((await page.locator('a[href^="mailto:"]').first().getAttribute('href'))==='mailto:sowndaryas397@gmail.com');
    assert.equal(await page.locator('a[href="https://www.linkedin.com/in/sowndarya-suresh-kumar/"]').count(),2);
-   await page.getByRole('link',{name:'Back to top',exact:true}).click();await page.waitForTimeout(800);assert((await page.evaluate(()=>scrollY))<100);
+   await page.getByRole('link',{name:'Back to top',exact:true}).click();await page.waitForFunction(()=>scrollY<100,undefined,{timeout:5000});
    for(const [width,height] of [[844,390],[667,375]]){await page.setViewportSize({width,height});await overflow(page,engine+' landscape');if(width<801){await page.locator('.menu-toggle').click();assert(await page.locator('#mobile-menu a').last().isVisible());await page.keyboard.press('Escape');}}
    await page.setViewportSize({width:320,height:900});await page.locator('.hero-tagline').evaluate(el=>el.textContent+=' Additional supporting information about business requirements and stakeholder communication.'.repeat(8));await overflow(page,engine+' long content');
    await visit(page);await page.emulateMedia({reducedMotion:'reduce'});await page.locator('.replay').click();assert.equal((await page.locator('.phase').innerText()).trim(),'04 / CLARITY');assert.equal(await page.locator('.cursor').evaluate(el=>getComputedStyle(el).display),'none');assert.equal(await page.locator('html').evaluate(el=>getComputedStyle(el).scrollBehavior),'auto');
