@@ -16,7 +16,7 @@
 }
 * {box-sizing:border-box}
 html {scroll-behavior:smooth; scroll-padding-top:calc(var(--header) + 1rem)}
-body {margin:0;background:var(--paper);color:var(--ink);font:400 var(--text-base)/1.65 var(--body)}
+body {overflow-wrap:anywhere;margin:0;background:var(--paper);color:var(--ink);font:400 var(--text-base)/1.65 var(--body)}
 [hidden] {display:none!important}
 h1,h2,h3,.lead,.footer-name,.statement p {font-family:var(--heading);font-weight:500;line-height:1.12;letter-spacing:-.045em}
 h2 {font-size:clamp(2rem,4.3vw,4rem);margin:0;text-wrap:balance}
@@ -221,7 +221,7 @@ footer {background:var(--ink);color:var(--paper);padding:3rem var(--gutter) 1.5r
   .cursor.over {background:#1a6a5120;outline:1px solid #1a6a5170}
 }
 /* Complex artwork becomes a readable sequence in narrow containers. */
-@container(max-width:420px) {
+@container(max-width:26.25rem) {
   .workflow {display:grid;grid-template-columns:minmax(0,1fr);gap:.75rem;padding:1rem 1.25rem;aspect-ratio:auto}
   .connections {display:none}.flow-node,.flow-core,.clarity {position:static;transform:none;width:auto;aspect-ratio:auto}
   .flow-node {font-size:.8125rem;padding:.75rem;gap:.75rem}
@@ -234,12 +234,12 @@ footer {background:var(--ink);color:var(--paper);padding:3rem var(--gutter) 1.5r
   .hero-location {display:flex;align-items:center;gap:.5rem;letter-spacing:0;color:var(--muted)}.hero-location svg {width:15px}
   .hero-bottom>span {display:block;font-size:.6875rem;text-align:right}
   .hero-grid {padding-block:3rem}.hero-role {font-size:1rem}.hero-tagline {font-size:1.125rem}
-  .principles {grid-template-columns:repeat(3,minmax(0,1fr))}
+  .principles {grid-template-columns:repeat(auto-fit,minmax(min(100%,10rem),1fr))}
   .principles>div {display:block;border-bottom:0;border-right:1px solid var(--line);padding:1.5rem}
   .principles>div:first-child {padding-left:0}.principles h3 {margin-top:1.25rem;font-size:1.375rem}.principles p {margin-top:.75rem}
   .experience-item {grid-template-columns:25% minmax(0,1fr);gap:5%}
   .dates {display:block}.dates>span {display:block;text-align:left;margin-top:.75rem}
-  .diagram {grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem}.diagram:has(li:nth-child(3):last-child) {grid-template-columns:repeat(3,minmax(0,1fr))}
+  .diagram {grid-template-columns:repeat(auto-fit,minmax(min(100%,6rem),1fr));gap:.75rem}
   .footer-bottom {flex-direction:row;justify-content:space-between;align-items:center}
 }
 @media(min-width:801px) {

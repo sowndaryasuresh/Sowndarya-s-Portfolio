@@ -56,7 +56,7 @@ let base;
     await context.grantPermissions(['clipboard-read','clipboard-write']);await page.locator('.copy-email').click();assert.equal(await page.evaluate(()=>navigator.clipboard.readText()),'sowndaryas397@gmail.com');
     // 200% layout zoom is exercised as a 640px CSS viewport; 200% text-only enlargement adds a stricter reflow check.
     await page.setViewportSize({width:640,height:450});await visit(page);await overflow(page,'200% layout zoom equivalent');
-    await page.addStyleTag({content:'html { font-size: 200%; }'});await overflow(page,'200% text zoom');
+    await page.addStyleTag({content:'html { font-size: 200%; }'});await page.screenshot({path:path.join(out,'chromium-200-text.png'),fullPage:true});await overflow(page,'200% text zoom');
     await page.setViewportSize({width:390,height:844});await visit(page);await page.locator('details').evaluateAll(es=>es.forEach(e=>e.open=true));
     for(const width of [390,1440]){await page.setViewportSize({width,height:1000});const a=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();results.accessibility.push({width,violations:a.violations});assert.equal(a.violations.length,0,JSON.stringify(a.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}))));}
    }
